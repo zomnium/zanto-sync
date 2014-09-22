@@ -33,7 +33,12 @@ class ZantoSyncPosts extends ZantoSyncComponent
 		//
 	}
 
-	public function new_post() {}
+	public function new_post()
+	{
+		switch_to_blog( $site_id );
+		// do something
+		restore_current_blog();
+	}
 
 	public function update_post( $post_id, $post_after, $post_before ) {}
 
