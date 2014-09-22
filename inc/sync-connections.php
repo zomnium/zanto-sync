@@ -4,21 +4,26 @@
  * Sync Connections for Zanto
  */
 
-class ZantoSyncConnections extends ZantoSyncComponent {
-
-	public function __construct() {
+class ZantoSyncConnections extends ZantoSyncComponent
+{
+	public function __construct()
+	{
+		// Load ZantoSyncComponent
 		parent::__construct();
 	}
 
-	public function set_hooks() {
+	public function set_hooks()
+	{
 		add_action( 'the_post', array( $this, 'get_event' ) );
 	}
 
-	public function batch_process() {
+	public function batch_process()
+	{
 		//
 	}
 
-	public function sync_connections() {
+	public function sync_connections()
+	{
 		//
 	}
 }
