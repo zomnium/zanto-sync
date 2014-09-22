@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @package ZantoSync
- * @version 0.0.1
- */
-
 /*
 Plugin Name: Sync for Zanto
 Plugin URI: http://zomnium.com/
@@ -29,6 +24,7 @@ class ZantoSync
 	 * Constructor
 	 * Initalizes the plugin
 	 */
+
 	public function __construct()
 	{
 		self::$instance = $this;
@@ -39,6 +35,7 @@ class ZantoSync
 	 * Get instance
 	 * Returns the singleton instance
 	 */
+
 	public static function get_instance()
 	{
 		return self::$instance;
@@ -48,27 +45,48 @@ class ZantoSync
 	 * Validate requirements
 	 * Executes a checklist for all plugin requirements
 	 */
-	public function validate_requirements() {}
+
+	public function validate_requirements()
+	{
+		// Check if Zanto is found
+		if ( ! defined( 'GTP_ZANTO_VERSION' ) ) return false;
+
+		// Check for Zanto setup completion
+		if ( 'complete' != $this->settings['setup_status']['setup_wizard'] ) return false;
+
+		// Everything is okay :D
+		return true;
+	}
 
 	/**
-	 * Found
+	 * Get network
+	 * Returns the translation network
 	 */
-	public function zwt_found() {}
+
+	public function get_network()
+	{
+		return zwt_get_languages();
+	}
 
 	/**
-	 * Network
+	 * Get primary language
+	 * Returns the primary language
 	 */
-	public function zwt_network() {}
+
+	public function get_primary_language()
+	{
+		return $this->settings['translation_settings']['default_admin_locale'];
+	}
 
 	/**
-	 * Primary
+	 * Get current language
+	 * Returns the current language
 	 */
-	public function zwt_primary() {}
 
-	/**
-	 * Current
-	 */
-	public function zwt_current() {}
+	public function get_current_language()
+	{
+		return get_bloginfo( 'language' );
+	}
 }
 
 // Let's run this basterd :)
