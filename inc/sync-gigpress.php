@@ -4,29 +4,70 @@
  * Sync Gigpress for Zanto
  */
 
-class ZantoSyncGigpress extends ZantoSyncComponent {
-
-	public function __construct() {
+class ZantoSyncGigpress extends ZantoSyncComponent
+{
+	public function __construct()
+	{
+		// Load ZantoSyncComponent
 		parent::__construct();
-		if ( defined( 'GIGPRESS_VERSION') ) {
-			return $this->set_hooks();
-		}
-	}
 
-	public function set_hooks() {
-		add_action( 'the_post', array( $this, 'get_event' ) );
-	}
+		// Requirements are not met
+		if ( $this->validate_requirements() ) return false;
 
-	public function get_event( $post ) {
-		if ( 'post' == $post->get_post_type() ) {
-			$post_id = get_metadata( 'post', $post->ID, 'zwt_post_network' );
-			return $this->gigpress_show_related( array(), $post, $post_id );
-		}
+		// Set hooks
+		return $this->set_hooks();
 	}
 
 	/**
-	 * Credits: Gigpress
+	 * Validate requirements
+	 * Checks if everything is ok
 	 */
+
+	public function validate_requirements()
+	{
+		// Check if GigPress is active
+		if ( ! defined( 'GIGPRESS_VERSION' ) ) return false;
+
+		// Current language is primary
+		if ( $this->zanto_sync->get_current_language() == $this->zanto_sync->get_primary_language() ) return false;
+
+		// Everything looks good :)
+		return true;
+	}
+
+	/**
+	 * Set hooks
+	 * Straps all hooks to actions or filters
+	 */
+
+	public function set_hooks()
+	{
+		add_action( 'the_post', array( $this, 'get_event' ) );
+	}
+
+	/**
+	 * Get event
+	 * Returns the current post or event
+	 */
+
+	public function get_event( $post )
+	{
+		// Wrong post type
+		if ( 'post' != $post->get_post_type() )
+			return false;
+
+		// Get Zanto metadata
+		$post_id = get_metadata( 'post', $post->ID, 'zwt_post_network' );
+
+		// Return related shows when found
+		return $this->gigpress_show_related( array(), $post, $post_id );
+	}
+
+	/**
+	 * Gigpress show related
+	 * A modified copy from the GigPress source to make this work
+	 */
+
 	private function gigpress_show_related( $args = array(), $content = '', $post_id ) {
 			
 		global $is_excerpt, $wpdb, $gpo, $post;
