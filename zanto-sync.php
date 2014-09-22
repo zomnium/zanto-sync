@@ -14,8 +14,8 @@ Version: 0.0.1
 Author URI: http://zomnium.com/
 */
 
-class ZantoSync {
-
+class ZantoSync
+{
 	// Singleton instance
 	private static $instance;
 
@@ -29,7 +29,8 @@ class ZantoSync {
 	 * Constructor
 	 * Initalizes the plugin
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		self::$instance = $this;
 		$this->settings = get_option( 'zwt_zanto_settings', null );
 	}
@@ -38,7 +39,8 @@ class ZantoSync {
 	 * Get instance
 	 * Returns the singleton instance
 	 */
-	public static function get_instance() {
+	public static function get_instance()
+	{
 		return self::$instance;
 	}
 
