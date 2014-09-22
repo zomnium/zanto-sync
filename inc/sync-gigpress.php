@@ -7,6 +7,7 @@
 class ZantoSyncGigpress extends ZantoSyncComponent {
 
 	public function __construct() {
+		parent::__construct();
 		if ( defined( 'GIGPRESS_VERSION') ) {
 			return $this->set_hooks();
 		}

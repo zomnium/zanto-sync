@@ -7,6 +7,7 @@
 class ZantoSyncPosts extends ZantoSyncComponent {
 
 	public function __construct() {
+		parent::__construct();
 	}
 
 	public function set_hooks() {
