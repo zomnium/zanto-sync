@@ -16,13 +16,27 @@ Author URI: http://zomnium.com/
 
 class ZantoSync {
 
+	private static $instance;
+	private $settings;
+	private $components;
+
 	public function __construct() {
-		return true;
+		self::$instance = $this;
 	}
 
-	public function validateRequirements() {
-		return false;
+	public static function get_instance() {
+		return self::$instance;
 	}
+
+	public function validate_requirements() {}
+
+	public function zwt_found() {}
+
+	public function zwt_network() {}
+
+	public function zwt_primary() {}
+
+	public function zwt_current() {}
 }
 
 new ZantoSync;
