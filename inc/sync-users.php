@@ -84,7 +84,7 @@ class ZantoSyncUsers extends ZantoSyncComponent
 		// Get current language
 		$current_language = $this->zanto_sync->get_current_language();
 
-		// Loop through networks
+		// Loop through network blogs
 		foreach ($network as $blog)
 		{
 			// Exclude current blog from syncing
