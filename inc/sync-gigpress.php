@@ -20,7 +20,8 @@ class ZantoSyncGigpress extends ZantoSyncComponent
 
 	/**
 	 * Validate requirements
-	 * Checks if everything is ok
+	 * Checks if everything is okay
+	 * @return boolean
 	 */
 
 	public function validate_requirements()
@@ -28,8 +29,8 @@ class ZantoSyncGigpress extends ZantoSyncComponent
 		// Check if GigPress is active
 		if ( ! defined( 'GIGPRESS_VERSION' ) ) return false;
 
-		// Current language is primary
-		if ( $this->zanto_sync->get_current_language() == $this->zanto_sync->get_primary_language() ) return false;
+		// Current language is not primary
+		if ( $this->zanto_sync->get_current_language() != $this->zanto_sync->get_primary_language() ) return false;
 
 		// Everything looks good :)
 		return true;
@@ -38,6 +39,7 @@ class ZantoSyncGigpress extends ZantoSyncComponent
 	/**
 	 * Set hooks
 	 * Straps all hooks to actions or filters
+	 * @return null
 	 */
 
 	public function set_hooks()
@@ -48,11 +50,13 @@ class ZantoSyncGigpress extends ZantoSyncComponent
 	/**
 	 * Get event
 	 * Returns the current post or event
+	 * @param object WP_Post $post
+	 * @return object WP_Post
 	 */
 
 	public function get_event( $post )
 	{
-		// Wrong post type
+		// For posts only
 		if ( 'post' != $post->get_post_type() )
 			return false;
 
@@ -66,6 +70,11 @@ class ZantoSyncGigpress extends ZantoSyncComponent
 	/**
 	 * Gigpress show related
 	 * A modified copy from the GigPress source to make this work
+	 * @author GigPress
+	 * @param array $args
+	 * @param string $content
+	 * @param int $post_id
+	 * @return object WP_Post
 	 */
 
 	private function gigpress_show_related( $args = array(), $content = '', $post_id ) {
