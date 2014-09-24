@@ -17,6 +17,9 @@ class ZantoSync
 	// Zanto settings
 	private $settings;
 
+	// Zanto object
+	private $zanto;
+
 	// Zanto Sync Components
 	private $components;
 
@@ -27,8 +30,11 @@ class ZantoSync
 
 	public function __construct()
 	{
+		// Create ZantoSync instance
 		self::$instance = $this;
-		$this->settings = get_option( 'zwt_zanto_settings', null );
+
+		// Wait for all plugins to load, then execute
+		add_action( 'plugins_loaded', array( $this, 'bootstrap' ) );
 	}
 
 	/**
@@ -59,6 +65,30 @@ class ZantoSync
 	}
 
 	/**
+	 * Bootstrap
+	 * Executes this plugin after all plugins are loaded
+	 */
+
+	public function bootstrap()
+	{
+		// Get Zanto object
+		global $zwt_site_obj;
+
+		// Check requirements
+		if ( ! $this->validate_requirements() ) return false;
+
+		// Load Zanto settings
+		$this->settings = get_option( 'zwt_zanto_settings', null );
+
+		// Zanto is registered and found
+		if ( isset( $zwt_site_obj ) )
+		{
+			// Get Zanto local
+			$this->zanto = $zwt_site_obj;
+		}
+	}
+
+	/**
 	 * Get network
 	 * Returns the translation network
 	 */
@@ -66,6 +96,16 @@ class ZantoSync
 	public function get_network()
 	{
 		return zwt_get_languages();
+	}
+
+	/**
+	 * Get network blogs
+	 * Returns the translation network's language codes and blog id's
+	 */
+
+	public function get_network_blogs()
+	{
+		return $this->zanto->modules['trans_network']->get_transnet_blogs();
 	}
 
 	/**
