@@ -10,48 +10,89 @@ class ZantoSyncUsers extends ZantoSyncComponent
 	{
 		// Load ZantoSyncComponent
 		parent::__construct();
+
+		// Set hooks
+		$this->set_hooks();
 	}
 
 	/**
 	 * Set hooks
+	 * @return null
 	 */
 
 	public function set_hooks()
 	{
-		add_action( 'user_register', array( $this, 'sync_user', 10, 1 ) );
-		add_action( 'profile_update', array( $this, 'sync_user' ) );
+		add_action( 'user_register', array( $this, 'updated_user', 10, 1 ) );
+		add_action( 'profile_update', array( $this, 'updated_user' ), 10, 2 );
+		add_action( 'edit_user_profile_update', array( $this, 'updated_user' ), 10, 2 );
 	}
 
 	/**
 	 * Batch process
+	 * @todo implement this function
 	 */
 
 	public function batch_process() {}
 
 	/**
-	 * New user
+	 * Updated user
+	 * For new or updated users
+	 * @param int $user_id
+	 * @param object $misc - optional
+	 * @return null
 	 */
 
-	public function new_user( $user_id ) {}
+	public function updated_user( $user_id, $misc = false )
+	{
+		// Get user
+		$user = get_user_by( 'id', $user_id );
 
-	/**
-	 * Update user
-	 */
+		// User is found
+		if ( $user )
+		{
+			// Get roles
+			$user_roles = $user->roles;
 
-	public function update_user() {}
+			// TODO:
+			// Process role(s)? (Must be one of the WordPress roles.)
+
+			// Let's sync!
+			$this->sync_user( $user_id, $user_roles );
+		}
+	}
 
 	/**
 	 * Delete user
+	 * @todo implement this function
 	 */
 
 	public function delete_user() {}
 
 	/**
 	 * Sync user
+	 * Handles user network syncing
+	 * @param int $user_id
+	 * @param array $roles
+	 * @return null
 	 */
 
-	public function sync_user()
+	public function sync_user( $user_id, $roles )
 	{
-		return add_user_to_blog( $blog_id, $user_id, $role );
+		// Get network blogs
+		$network = $this->zanto_sync->get_network_blogs();
+
+		// Get current language
+		$current_language = $this->zanto_sync->get_current_language();
+
+		// Loop through networks
+		foreach ($network as $blog)
+		{
+			// Exclude current blog from syncing
+			if ( $blog['lang_code'] != $current_language )
+			{
+				// Sync user
+				add_user_to_blog( $blog['blog_id'], $user_id, $roles );
+			}
+		}
 	}
 }
