@@ -12,11 +12,12 @@ class ZantoSyncPosts extends ZantoSyncComponent
 		parent::__construct();
 
 		// Set hooks
-		return $this->set_hooks();
+		$this->set_hooks();
 	}
 
 	/**
 	 * Set hooks
+	 * @return null
 	 */
 
 	public function set_hooks()
@@ -28,10 +29,20 @@ class ZantoSyncPosts extends ZantoSyncComponent
 		add_action( 'before_delete_post  ', array( $this, 'delete_post' ) );
 	}
 
+	/**
+	 * Batch process
+	 * @todo implement this function
+	 */
+
 	public function batch_process()
 	{
 		//
 	}
+
+	/**
+	 * New post
+	 * @todo implement this function
+	 */
 
 	public function new_post()
 	{

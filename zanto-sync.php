@@ -50,6 +50,7 @@ class ZantoSync
 	/**
 	 * Validate requirements
 	 * Executes a checklist for all plugin requirements
+	 * @return boolean
 	 */
 
 	public function validate_requirements()
@@ -67,6 +68,7 @@ class ZantoSync
 	/**
 	 * Bootstrap
 	 * Executes this plugin after all plugins are loaded
+	 * @return null 
 	 */
 
 	public function bootstrap()
@@ -91,6 +93,7 @@ class ZantoSync
 	/**
 	 * Get network
 	 * Returns the translation network
+	 * @return array
 	 */
 
 	public function get_network()
@@ -101,6 +104,7 @@ class ZantoSync
 	/**
 	 * Get network blogs
 	 * Returns the translation network's language codes and blog id's
+	 * @return array
 	 */
 
 	public function get_network_blogs()
@@ -111,6 +115,7 @@ class ZantoSync
 	/**
 	 * Get primary language
 	 * Returns the primary language
+	 * @return string
 	 */
 
 	public function get_primary_language()
@@ -121,6 +126,7 @@ class ZantoSync
 	/**
 	 * Get current language
 	 * Returns the current language
+	 * @return string
 	 */
 
 	public function get_current_language()
