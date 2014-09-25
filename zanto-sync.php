@@ -14,14 +14,14 @@ class ZantoSync
 	// Singleton instance
 	private static $instance;
 
-	// Zanto settings
-	private $settings;
-
 	// Zanto object
 	private $zanto;
 
-	// Zanto Sync Components
-	private $components;
+	// Zanto settings
+	private $zanto_settings;
+
+	// ZantoSync Modules
+	private $modules;
 
 	/**
 	 * Constructor
@@ -58,8 +58,11 @@ class ZantoSync
 		// Check if Zanto is found
 		if ( ! defined( 'GTP_ZANTO_VERSION' ) ) return false;
 
+		// Check for Zanto settings
+		if ( ! $this->zanto_settings ) return false;
+
 		// Check for Zanto setup completion
-		if ( 'complete' != $this->settings['setup_status']['setup_wizard'] ) return false;
+		if ( 'complete' != $this->zanto_settings['setup_status']['setup_wizard'] ) return false;
 
 		// Everything is okay :D
 		return true;
@@ -76,11 +79,11 @@ class ZantoSync
 		// Get Zanto object
 		global $zwt_site_obj;
 
+		// Load Zanto settings
+		$this->zanto_settings = get_option( 'zwt_zanto_settings', false );
+
 		// Check requirements
 		if ( ! $this->validate_requirements() ) return false;
-
-		// Load Zanto settings
-		$this->settings = get_option( 'zwt_zanto_settings', null );
 
 		// Zanto is registered and found
 		if ( isset( $zwt_site_obj ) )
@@ -91,47 +94,25 @@ class ZantoSync
 	}
 
 	/**
-	 * Get network
-	 * Returns the translation network
-	 * @return array
+	 * Load module
+	 * Includes and loads Zanto Sync modules
+	 * @param string $file
+	 * @param string $class
+	 * @return boolean
 	 */
 
-	public function get_network()
+	public function load_module( $file, $class )
 	{
-		return zwt_get_languages();
-	}
+		// Get file if it exists
+		if ( ! file_exists( $file ) ) return false;
+		include_once( $file );
 
-	/**
-	 * Get network blogs
-	 * Returns the translation network's language codes and blog id's
-	 * @return array
-	 */
+		// Load class if it exists
+		if ( ! is_object( $class ) ) return false;
+		$this->modules = new $class;
 
-	public function get_network_blogs()
-	{
-		return $this->zanto->modules['trans_network']->get_transnet_blogs();
-	}
-
-	/**
-	 * Get primary language
-	 * Returns the primary language
-	 * @return string
-	 */
-
-	public function get_primary_language()
-	{
-		return $this->settings['translation_settings']['default_admin_locale'];
-	}
-
-	/**
-	 * Get current language
-	 * Returns the current language
-	 * @return string
-	 */
-
-	public function get_current_language()
-	{
-		return get_bloginfo( 'language' );
+		// Done and you know it!
+		return true;
 	}
 }
 
