@@ -4,11 +4,11 @@
  * Sync Users for Zanto
  */
 
-class ZantoSyncUsers extends ZantoSyncComponent
+class ZantoSyncUsers extends ZantoSyncModule
 {
 	public function __construct()
 	{
-		// Load ZantoSyncComponent
+		// Load ZantoSyncModule
 		parent::__construct();
 
 		// Set hooks

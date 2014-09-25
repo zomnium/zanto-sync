@@ -4,11 +4,11 @@
  * Sync Posts for Zanto
  */
 
-class ZantoSyncPosts extends ZantoSyncComponent
+class ZantoSyncPosts extends ZantoSyncModule
 {
 	public function __construct()
 	{
-		// Load ZantoSyncComponent
+		// Load ZantoSyncModule
 		parent::__construct();
 
 		// Set hooks

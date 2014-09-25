@@ -4,11 +4,11 @@
  * Sync Gigpress for Zanto
  */
 
-class ZantoSyncGigpress extends ZantoSyncComponent
+class ZantoSyncGigpress extends ZantoSyncModule
 {
 	public function __construct()
 	{
-		// Load ZantoSyncComponent
+		// Load ZantoSyncModule
 		parent::__construct();
 
 		// Requirements are not met

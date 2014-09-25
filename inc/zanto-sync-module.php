@@ -4,7 +4,7 @@
  * Component for Zanto Sync
  */
 
-abstract class ZantoSyncComponent {
+abstract class ZantoSyncModule {
 
 	protected $zanto_sync;
 

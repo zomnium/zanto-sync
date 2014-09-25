@@ -4,11 +4,11 @@
  * Sync Connections for Zanto
  */
 
-class ZantoSyncConnections extends ZantoSyncComponent
+class ZantoSyncConnections extends ZantoSyncModule
 {
 	public function __construct()
 	{
-		// Load ZantoSyncComponent
+		// Load ZantoSyncModule
 		parent::__construct();
 
 		// Check requirements
