@@ -90,6 +90,13 @@ class ZantoSync
 		{
 			// Get Zanto local
 			$this->zanto = $zwt_site_obj;
+
+			// Load core components
+			require_once( 'inc/zanto-sync-module.php' );
+			require_once( 'inc/zanto-sync-ui.php' );
+
+			// Load core modules
+			$this->module_load( __DIR__ . '/modules/helpers.php', 'ZantoSyncHelpers', 'helpers' );
 		}
 	}
 
@@ -101,19 +108,37 @@ class ZantoSync
 	 * @return boolean
 	 */
 
-	public function load_module( $file, $class )
+	public function module_load( $file, $class, $key = false )
 	{
 		// Get file if it exists
 		if ( ! file_exists( $file ) ) return false;
-		include_once( $file );
+		require_once( $file );
 
 		// Load class if it exists
-		if ( ! is_object( $class ) ) return false;
-		$this->modules = new $class;
+		if ( ! class_exists( $class ) ) return false;
+		$key = ( ! $key ) ? $class : $key;
+		$this->modules[$key] = new $class;
 
 		// Done and you know it!
 		return true;
 	}
+
+	/**
+	 * Module
+	 * Gives access to loaded modules
+	 * @param string $module
+	 * @return boolean or object
+	 */
+
+	public function module( $module )
+	{
+		// Requested module is not loaded
+		if ( ! isset( $this->modules[$module] ) ) return false;
+
+		// Return module object
+		return $this->modules[$module];
+	}
+
 }
 
 // Let's run this basterd :)
