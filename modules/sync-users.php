@@ -91,6 +91,7 @@ class ZantoSyncUsers extends ZantoSyncModule
 			if ( $blog['lang_code'] != $current_language )
 			{
 				// Sync user
+				// http://codex.wordpress.org/WPMU_Functions/add_user_to_blog
 				add_user_to_blog( $blog['blog_id'], $user_id, $roles );
 			}
 		}
