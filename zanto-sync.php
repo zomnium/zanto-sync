@@ -133,11 +133,8 @@ class ZantoSync
 
 	public function module( $module )
 	{
-		// Requested module is not loaded
-		if ( ! isset( $this->modules[$module] ) ) return false;
-
-		// Return module object
-		return $this->modules[$module];
+		// Return module object if it excists
+		return ( isset( $this->modules[$module] ) ) ? $this->modules[$module] : false;
 	}
 
 }
