@@ -94,9 +94,10 @@ class ZantoSync
 			// Load core components
 			require_once( 'inc/zanto-sync-module.php' );
 
-			// Load core modules
+			// Load core modules and features
 			$this->module_load( __DIR__ . '/modules/helpers.php', 'ZantoSyncHelpers', 'helpers' );
 			$this->module_load( __DIR__ . '/inc/zanto-sync-ui.php', 'ZantoSyncUI', 'ui' );
+			$this->module_load( __DIR__ . '/modules/translation-redirect.php', 'ZantoSyncTranslationRedirect', 'translation_redirect' );
 		}
 	}
 
