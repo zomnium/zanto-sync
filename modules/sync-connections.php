@@ -11,8 +11,8 @@ class ZantoSyncConnections extends ZantoSyncModule
 		// Load ZantoSyncModule
 		parent::__construct();
 
-		// Check requirements
-		if ( $this->validate_requirements() ) return false;
+		// Requirements are not met
+		if ( ! $this->validate_requirements() ) return false;
 
 		// Set hooks
 		$this->set_hooks();

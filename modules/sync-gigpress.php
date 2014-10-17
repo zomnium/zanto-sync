@@ -12,7 +12,7 @@ class ZantoSyncGigpress extends ZantoSyncModule
 		parent::__construct();
 
 		// Requirements are not met
-		if ( $this->validate_requirements() ) return false;
+		if ( ! $this->validate_requirements() ) return false;
 
 		// Set hooks
 		return $this->set_hooks();
