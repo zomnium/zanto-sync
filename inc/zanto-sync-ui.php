@@ -30,6 +30,7 @@ class ZantoSyncUI
 	public function admin_navigation()
 	{
 		// Register navigation item
+		// /wp-admin/options-general.php?page=sync-for-zanto
 	    add_options_page(
 	    	'Sync for Zanto',			// Page title
 	    	'Sync for Zanto',			// Navigation title
