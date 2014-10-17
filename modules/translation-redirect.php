@@ -161,10 +161,17 @@ class ZantoSyncTranslationRedirect extends ZantoSyncModule
 	{
 		// Use current language as default
 		if ( ! $language )
+		{
+			// Get current language
 			$language = $this->zanto_sync->module('helpers')->get_current_language();
 
-		// TODO:
-		// Build an current is source detection, to prevent messy URL's when possible
+			// Get current domain
+			$current_domain = str_replace( 'http://', '', get_home_url() );
+
+			// Domains match, redirection variable is not needed
+			if ( is_numeric( strpos( $permalink, $current_domain ) ) )
+				return $permalink;
+		}
 
 		// Create and return permalink
 		return $permalink . '?translation_redirect=' . $language;
